@@ -10,12 +10,14 @@ public partial class InputSystem : SystemBase
         inputControls = new InputControls();
         inputControls.Enable();
     }
-
+    
     protected override void OnUpdate()
     {
-        foreach (var inputComponent in SystemAPI.Query<RefRW<InputComponent>>())
-        {
-            inputComponent.ValueRW.moveInput = inputControls.Player.Newaction.ReadValue<Vector2>();
-        }
+        // wtf is this syntax????? Unity plz
+        SystemAPI.SetSingleton(new InputComponent
+        { 
+            moveInput = inputControls.Player.Movement.ReadValue<Vector2>(),
+            isShooting = inputControls.Player.Shoot.ReadValue<float>() == 1
+        });
     }
 }
