@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using UnityEngine;
+using Unity.Mathematics;
 
 public struct BulletSpawnDataComponent : IComponentData
 {
     public Entity prefab;
-    public float speed;
+    public float3 bulletSpawnPos;
     public float shootCooldown;
 }

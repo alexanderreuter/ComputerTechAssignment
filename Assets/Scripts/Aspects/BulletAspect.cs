@@ -12,6 +12,6 @@ public readonly partial struct BulletAspect : IAspect
 
     public void HandleMovement(float deltaTime)
     {
-        transform.ValueRW.Position = bulletData.ValueRO.initialPosition;
+        transform.ValueRW.Position += bulletData.ValueRO.speed * deltaTime * transform.ValueRO.Up();
     }
 }

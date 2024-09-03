@@ -7,16 +7,13 @@ using UnityEngine;
 
 public partial struct BulletSystem : ISystem
 {
-    private Entity player;
+    // private Entity player;
     // private LocalTransform playerTransform;
-    private EntityManager entityManager;
-    
+    // private EntityManager entityManager;
+
     public void OnCreate(ref SystemState state)
     {
-        state.RequireForUpdate<PlayerTagComponent>();
-        entityManager = state.EntityManager;
-        player = SystemAPI.GetSingletonEntity<PlayerTagComponent>();
-        // playerTransform = entityManager.GetComponentData<LocalTransform>(player);
+        state.RequireForUpdate<BulletTag>();
     }
     
     public void OnUpdate(ref SystemState state)

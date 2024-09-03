@@ -12,6 +12,7 @@ public class PlayerAuthoring : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float shootCooldown;
+    [SerializeField] private float3 bulletSpawnPos;
     
     private class PlayerBaker : Baker<PlayerAuthoring>
     {
@@ -25,7 +26,7 @@ public class PlayerAuthoring : MonoBehaviour
             AddComponent(entity, new BulletSpawnDataComponent()
             {
                 prefab = GetEntity(authoring.bulletPrefab, TransformUsageFlags.Dynamic),
-                speed = authoring.bulletSpeed,
+                bulletSpawnPos = authoring.bulletSpawnPos,
                 shootCooldown = authoring.shootCooldown
             });
         }

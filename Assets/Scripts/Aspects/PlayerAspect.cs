@@ -27,8 +27,11 @@ public readonly partial struct PlayerAspect : IAspect
         {
             Entity bulletEntity = entityManager.Instantiate(bulletSpawnData.ValueRO.prefab);
 
+            LocalTransform bulletTransform = entityManager.GetComponentData<LocalTransform>(bulletEntity);
+            bulletTransform.Rotation = transform.ValueRO.Rotation;
+            bulletTransform.Position =  transform.ValueRO.Position + bulletSpawnData.ValueRO.bulletSpawnPos;
+            entityManager.SetComponentData<LocalTransform>(bulletEntity, bulletTransform);
             
-
             nextShootTime.ValueRW.value = (float)elapsedTime + bulletSpawnData.ValueRO.shootCooldown;
         }
     }
