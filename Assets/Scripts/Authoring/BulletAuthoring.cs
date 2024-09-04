@@ -12,7 +12,7 @@ public class BulletAuthoring : MonoBehaviour
     {
         public override void Bake(BulletAuthoring authoring)
         {
-            Entity entity = GetEntity(TransformUsageFlags.Dynamic);
+            var entity = GetEntity(TransformUsageFlags.Dynamic);
             
             AddComponent(entity, new BulletTag());
             AddComponent(entity, new BulletComponent()
