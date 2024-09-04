@@ -8,4 +8,5 @@ public struct BulletComponent : IComponentData
 {
     public float speed;
     public float3 initialPosition;
+    public float lifeTime;
 }

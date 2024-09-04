@@ -14,4 +14,9 @@ public readonly partial struct BulletAspect : IAspect
     {
         transform.ValueRW.Position += bulletData.ValueRO.speed * deltaTime * transform.ValueRO.Up();
     }
+
+    public void HandleLifetime(float deltaTime)
+    {
+        
+    }
 }

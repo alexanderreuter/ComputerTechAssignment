@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 
 public class BulletAuthoring : MonoBehaviour
 {
-    [SerializeField] private float bulletSpeed;
-
+    [SerializeField] private float speed;
+    [SerializeField] private float lifetime;
+    
     private class BulletBaker : Baker<BulletAuthoring>
     {
         public override void Bake(BulletAuthoring authoring)
@@ -17,7 +18,8 @@ public class BulletAuthoring : MonoBehaviour
             AddComponent(entity, new BulletTag());
             AddComponent(entity, new BulletComponent()
             {
-                speed = authoring.bulletSpeed,
+                speed = authoring.speed,
+                lifeTime = authoring.lifetime
             });
         }
     }
