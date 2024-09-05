@@ -8,15 +8,10 @@ using UnityEngine;
 public readonly partial struct BulletAspect : IAspect
 {
     public readonly RefRW<LocalTransform> transform;
-    public readonly RefRO<BulletComponent> bulletData;
+    public readonly RefRW<BulletComponent> bulletData;
 
     public void HandleMovement(float deltaTime)
     {
         transform.ValueRW.Position += bulletData.ValueRO.speed * deltaTime * transform.ValueRO.Up();
-    }
-
-    public void HandleLifetime(float deltaTime)
-    {
-        
     }
 }

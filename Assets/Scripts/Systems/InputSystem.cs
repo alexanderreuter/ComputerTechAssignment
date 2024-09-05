@@ -13,11 +13,10 @@ public partial class InputSystem : SystemBase
     
     protected override void OnUpdate()
     {
-        // wtf is this syntax????? Unity plz
-        SystemAPI.SetSingleton(new InputComponent
-        { 
-            moveInput = inputControls.Player.Movement.ReadValue<Vector2>(),
-            isShooting = inputControls.Player.Shoot.ReadValue<float>() == 1
-        });
+        foreach (var input in SystemAPI.Query<RefRW<InputComponent>>())
+        {
+            input.ValueRW.moveInput = inputControls.Player.Movement.ReadValue<Vector2>();
+            input.ValueRW.isShooting = inputControls.Player.Shoot.ReadValue<float>() > 0;
+        }
     }
 }
