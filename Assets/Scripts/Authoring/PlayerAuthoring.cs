@@ -10,7 +10,6 @@ public class PlayerAuthoring : MonoBehaviour
 {
     [SerializeField] private float speed = 5f;
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float bulletSpeed;
     [SerializeField] private float shootCooldown;
     [SerializeField] private float3 bulletSpawnPos;
     

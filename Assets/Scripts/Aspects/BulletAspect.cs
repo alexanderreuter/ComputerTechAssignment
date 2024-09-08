@@ -14,4 +14,14 @@ public readonly partial struct BulletAspect : IAspect
     {
         transform.ValueRW.Position += bulletData.ValueRO.speed * deltaTime * transform.ValueRO.Up();
     }
+
+    public void HandleLifetime(float deltaTime, ref EntityCommandBuffer.ParallelWriter ecb, int entityIndex, Entity entity)
+    {
+        bulletData.ValueRW.lifeTime -= deltaTime;
+        
+        if (bulletData.ValueRO.lifeTime <= 0f)
+        {
+            ecb.DestroyEntity(entityIndex, entity);
+        }
+    }
 }

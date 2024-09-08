@@ -7,10 +7,6 @@ using UnityEngine;
 
 public partial struct BulletSystem : ISystem
 {
-    // private Entity player;
-    // private LocalTransform playerTransform;
-    // private EntityManager entityManager;
-
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<BulletTag>();
@@ -18,22 +14,26 @@ public partial struct BulletSystem : ISystem
     
     public void OnUpdate(ref SystemState state)
     {
-        foreach (var bulletAspect in SystemAPI.Query<BulletAspect>())
+        var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+
+        var handle = new BulletJob
         {
-            bulletAspect.HandleMovement(SystemAPI.Time.DeltaTime); 
-            // HandleLifetime(ref state, bulletAspect);
-        }
+            deltaTime = SystemAPI.Time.DeltaTime,
+            ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
+        }.ScheduleParallel(state.Dependency);
+
+        state.Dependency = handle;
     }
     
-    public void HandleLifetime(ref SystemState state, BulletAspect bulletAspect)
+    public partial struct BulletJob : IJobEntity
     {
-        // bulletAspect.bulletData.ValueRW.lifeTime -= SystemAPI.Time.DeltaTime;
-        // var ecb = new EntityCommandBuffer(Allocator.TempJob);
-        //
-        // if (bulletAspect.bulletData.ValueRO.lifeTime <= 0f)
-        // {
-        //     // ecb.DestroyEntity();
-        // }
+        public float deltaTime;
+        public EntityCommandBuffer.ParallelWriter ecb;
 
+        private void Execute(BulletAspect bulletAspect, [EntityIndexInQuery] int entityIndex, Entity entity)
+        {
+            bulletAspect.HandleMovement(deltaTime); 
+            bulletAspect.HandleLifetime(deltaTime, ref ecb, entityIndex, entity);
+        }
     }
 }

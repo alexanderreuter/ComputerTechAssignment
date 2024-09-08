@@ -1,27 +1,37 @@
-using Unity.Collections;
 using Unity.Entities;
 
 public partial struct BulletSpawningSystem : ISystem
 {
-    private EntityManager entityManager;
-
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<PlayerTagComponent>();
-        entityManager = state.EntityManager;
     }
     
     public void OnUpdate(ref SystemState state)
     {
-        EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+        if (!SystemAPI.TryGetSingleton<InputComponent>(out var input) || !input.isShooting)
+            return;
         
-        foreach (var bulletSpawningAspect in SystemAPI.Query<BulletSpawningAspect>())
+        var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+
+        var handle = new BulletSpawnJob
         {
-            bulletSpawningAspect.HandleShooting(SystemAPI.Time.ElapsedTime, ref ecb);
+            elapsedTime = SystemAPI.Time.ElapsedTime,
+            ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
+        }.ScheduleParallel(state.Dependency);
+
+        state.Dependency = handle;
+    }
+    
+    public partial struct BulletSpawnJob : IJobEntity
+    {
+        public double elapsedTime;
+        public EntityCommandBuffer.ParallelWriter ecb;
+
+        private void Execute(BulletSpawningAspect bulletspawningAspect, [EntityIndexInQuery] int entityIndex)
+        {
+            bulletspawningAspect.HandleShooting(elapsedTime, ref ecb, entityIndex);
         }
-        
-        ecb.Playback(entityManager);
-        ecb.Dispose();
     }
 }
 
