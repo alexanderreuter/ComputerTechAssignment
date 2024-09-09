@@ -1,4 +1,5 @@
 using Unity.Entities;
+using RandomUnity = UnityEngine.Random;
 using Random = Unity.Mathematics.Random;
 
 public partial struct EnemySpawningSystem : ISystem
@@ -14,11 +15,12 @@ public partial struct EnemySpawningSystem : ISystem
     void OnUpdate(ref SystemState state)
     {
         var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-
+        
         var handle = new EnemySpawnJob()
         {
             deltaTime = SystemAPI.Time.DeltaTime,
-            ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
+            ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
+            seed = RandomUnity.Range(1, 1000)
         }.ScheduleParallel(state.Dependency);
 
         state.Dependency = handle;
@@ -38,17 +40,13 @@ public partial struct EnemySpawningSystem : ISystem
     {
         public float deltaTime;
         public EntityCommandBuffer.ParallelWriter ecb;
+        public int seed;
 
         private void Execute(EnemySpawningAspect enemySpawningAspect, [EntityIndexInQuery] int entityIndex)
         {
-            uint seed = 10;
-            
-            if (entityIndex > 0)
-            {
-                seed = (uint)entityIndex;
-            }
-            
-            Unity.Mathematics.Random rng = new Unity.Mathematics.Random(seed);
+            Unity.Mathematics.Random rng = new Unity.Mathematics.Random((uint)seed);
+
+            float test = rng.NextFloat(0f, 1f);
             
             enemySpawningAspect.HandleSpawning(deltaTime, ref ecb, entityIndex, rng);
         }
