@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
-using Unity.Mathematics;
-using Unity.Transforms;
-using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = Unity.Mathematics.Random;
 
 public partial struct EnemySpawningSystem : ISystem
 {
@@ -44,15 +39,18 @@ public partial struct EnemySpawningSystem : ISystem
         public float deltaTime;
         public EntityCommandBuffer.ParallelWriter ecb;
 
-        private void Execute(ref FloatComponent timeToNextSpawn, in FloatComponent spawnInterval, in PrefabComponent prefab, [EntityIndexInQuery] int entityIndex)
+        private void Execute(EnemySpawningAspect enemySpawningAspect, [EntityIndexInQuery] int entityIndex)
         {
-            timeToNextSpawn.value -= deltaTime;
-
-            if (timeToNextSpawn.value <= 0.0f)
+            uint seed = 10;
+            
+            if (entityIndex > 0)
             {
-                ecb.Instantiate(entityIndex, prefab.prefab);
-                timeToNextSpawn.value = spawnInterval.value;
+                seed = (uint)entityIndex;
             }
+            
+            Unity.Mathematics.Random rng = new Unity.Mathematics.Random(seed);
+            
+            enemySpawningAspect.HandleSpawning(deltaTime, ref ecb, entityIndex, rng);
         }
     }
 }

@@ -30,7 +30,7 @@ public partial struct BulletSpawningSystem : ISystem
 
         private void Execute(BulletSpawningAspect bulletspawningAspect, [EntityIndexInQuery] int entityIndex)
         {
-            bulletspawningAspect.HandleShooting(elapsedTime, ref ecb, entityIndex);
+            bulletspawningAspect.HandleSpawning(elapsedTime, ref ecb, entityIndex);
         }
     }
 }

@@ -15,10 +15,10 @@ public class EnemySpawnerAuthoring : MonoBehaviour
             
             AddComponent(entity, new EnemySpawnerTagComponent());
             AddComponent(entity, new FloatComponent() {value = 0});
-            AddComponent(entity, new FloatComponent() {value = authoring.spawnInterval});
-            AddComponent(entity, new PrefabComponent
+            AddComponent(entity, new EnemySpawnDataComponent()
             {
-                prefab = GetEntity(authoring.enemyPrefab, TransformUsageFlags.Dynamic)
+                prefab = GetEntity(authoring.enemyPrefab, TransformUsageFlags.Dynamic),
+                spawnInterval = authoring.spawnInterval
             });
         }
     }

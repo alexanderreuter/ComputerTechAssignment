@@ -11,7 +11,7 @@ public readonly partial struct BulletSpawningAspect: IAspect
     public readonly RefRO<InputComponent> input;
     public readonly RefRO<LocalTransform> transform;
     
-    public void HandleShooting(double elapsedTime, ref EntityCommandBuffer.ParallelWriter ecb, int entityIndex)
+    public void HandleSpawning(double elapsedTime, ref EntityCommandBuffer.ParallelWriter ecb, int entityIndex)
     {
         if (input.ValueRO.isShooting && nextShootTime.ValueRO.value < elapsedTime)
         {

@@ -15,7 +15,7 @@ public class BulletAuthoring : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             
-            AddComponent(entity, new BulletTag());
+            AddComponent(entity, new BulletTagComponent());
             AddComponent(entity, new BulletComponent()
             {
                 speed = authoring.speed,
