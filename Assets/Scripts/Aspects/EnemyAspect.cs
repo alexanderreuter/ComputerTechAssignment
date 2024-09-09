@@ -4,7 +4,7 @@ using Unity.Transforms;
 public readonly partial struct EnemyAspect : IAspect
 {
     public readonly RefRW<LocalTransform> transform;
-    public readonly RefRW<EnemyComponent> enemyData;
+    public readonly RefRO<EnemyComponent> enemyData;
     public readonly RefRW<LifetimeComponent> lifetime;
 
     public void HandleMovement(float deltaTime)

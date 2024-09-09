@@ -3,7 +3,6 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Random = Unity.Mathematics.Random;
 
-
 public readonly partial struct EnemySpawningAspect : IAspect
 {
     public readonly RefRO<LocalTransform> transform;
