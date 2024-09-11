@@ -41,4 +41,8 @@ For all the systems that're used with enteties that there're a lot of, in this c
 
 ### **Burst compilie:**
 
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+## **Reflections:**
+* Didn't have to use aspects, could better optimized but aspects keeps things more organized.
+* ECS very different from traditional objects oriented mindeset.
+* Could have added more features to the game but focused more on the optimization aspect.
