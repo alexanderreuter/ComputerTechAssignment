@@ -13,17 +13,11 @@ public class EnemyAuthoring : MonoBehaviour
     {
         public override void Bake(EnemyAuthoring authoring)
         {
-            float3 startPos = new float3(Random.Range(-12f, 12f), Random.Range(15f, 20f), 0f);
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             
             AddComponent(entity, new EnemyTagComponent());
             AddComponent(entity, new LifetimeComponent() {lifetime = authoring.lifetime});
-            AddComponent(entity, new EnemyComponent()
-            {
-                speed = authoring.speed,
-                startPos = startPos,
-                startPosSet = false
-            });
+            AddComponent(entity, new EnemyComponent() {speed = authoring.speed});
         }
     }
 }

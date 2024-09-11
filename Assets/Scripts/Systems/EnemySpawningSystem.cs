@@ -32,7 +32,7 @@ public partial struct EnemySpawningSystem : ISystem
 
         private void Execute(EnemySpawningAspect enemySpawningAspect, [EntityIndexInQuery] int entityIndex)
         {
-            Unity.Mathematics.Random rng = new Unity.Mathematics.Random((uint)seed);
+            Unity.Mathematics.Random rng = new Unity.Mathematics.Random(seed);
             enemySpawningAspect.HandleSpawning(deltaTime, ref ecb, entityIndex, rng);
         }
     }

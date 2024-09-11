@@ -19,7 +19,7 @@ public class PlayerAuthoring : MonoBehaviour
         {
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new PlayerTagComponent());
-            AddComponent(entity, new MovementComponent() {speed = authoring.speed});
+            AddComponent(entity, new PlayerComponent() {speed = authoring.speed});
             AddComponent(entity, new InputComponent());
             AddComponent(entity, new FloatComponent() {value = 0f});
             AddComponent(entity, new BulletSpawnDataComponent()

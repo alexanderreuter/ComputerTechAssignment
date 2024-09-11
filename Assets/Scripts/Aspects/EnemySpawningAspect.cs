@@ -19,7 +19,7 @@ public readonly partial struct EnemySpawningAspect : IAspect
             
             LocalTransform enemyTransform;
             enemyTransform.Position = new (rng.NextFloat(-17f, 17f), rng.NextFloat(15f, 20f), 0f);
-            enemyTransform.Rotation = transform.ValueRO.Rotation;
+            enemyTransform.Rotation = transform.ValueRO.Rotation; // Z -180 degrees
             enemyTransform.Scale = 1f;
             ecb.SetComponent<LocalTransform>(entityIndex, enemyEntity, enemyTransform);
             
