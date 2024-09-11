@@ -33,16 +33,12 @@ Example:
 
 
 ### **Jobs:**
-For almost all of my systems I'm using Unity jobs to exceute the systems behavior. The reason for this is to make sure that there's room to run the logic and to be able to utilize all available CPU cores (multithreading). The only system where I'm not using jobs is for input. This is because input needs immediate reaction, so I don't wanna add unnecssesary latency. Reading the input is also a low-cost operation and is only used for one entity, the player. Therfore there's no need for paralleism which is the main advantage with jobs.
+For almost all of my systems I'm using Unity jobs to exceute the systems behavior. The reason for this is to make sure that there's room to run the logic and to be able to utilize all available CPU cores (multithreading). 
 
-For all the systems that're used with enteties that there're a lot of, in this case bullets and enemies, I'm using parallel jobs. 
+The only system where I'm not using jobs is for input. This is because input needs immediate reaction, so I don't wanna add unnecssesary latency. Reading the input is also a low-cost operation and is only used for one entity, the player. Therfore there's no need for paralleism which is the main advantage with jobs.
 
+For all the systems that're used with enteties that there're a lot of, in this case bullets and enemies, I'm using parallel jobs. Since there's a high likelyhood that these systems are gonna be handling a lot of data we want to be able to use as much compute power as possible from the CPU.
 
 ### **Burst compilie:**
 
 
-
-Why I'm not using jobs for input:
-* Needs immediate reaction. Don't wanna add unnecssesary latency.
-* Low-cost operation
-* No need for paralleism
