@@ -1,5 +1,7 @@
+using Unity.Burst;
 using Unity.Entities;
 
+[BurstCompile]
 public partial struct EnemySystem : ISystem
 {
     public void OnCreate(ref SystemState state)

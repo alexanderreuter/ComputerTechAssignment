@@ -1,8 +1,10 @@
+using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using RandomUnity = UnityEngine.Random;
 using Random = Unity.Mathematics.Random;
 
+[BurstCompile]
 public partial struct EnemySpawningSystem : ISystem
 {
     void OnCreate(ref SystemState state)
@@ -18,7 +20,7 @@ public partial struct EnemySpawningSystem : ISystem
         {
             deltaTime = SystemAPI.Time.DeltaTime,
             ecb = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter(),
-            seed = (uint)RandomUnity.Range(1, 100000) // Why do you need 1 to 100 000 for it to work, helloow Unity ?!?!?
+            seed = (uint)RandomUnity.Range(1, int.MaxValue) 
         }.ScheduleParallel(state.Dependency);
 
         state.Dependency = handle;
