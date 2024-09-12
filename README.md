@@ -33,17 +33,17 @@ Example:
 
 
 ### **Jobs:**
-For almost all of my systems I'm using Unity jobs to exceute the systems behavior. The reason for this is to make sure that there's room to run the logic and to be able to utilize all available CPU cores (multithreading). 
+For almost all of my systems I'm using Unity jobs to exceute the systems behavior. The reason for this is to make sure that there's room to run the logic and to be able to utilize all available CPU cores. 
 
-The only system where I'm not using jobs is for input. This is because input needs immediate reaction, so I don't wanna add unnecssesary latency. Reading the input is also a low-cost operation and is only used for one entity, the player. Therfore there's no need for paralleism which is the main advantage with jobs.
+The only system where I'm not using jobs is for input. This is because input needs immediate reaction, so I don't wanna add unnecssesary latency. Reading the input is also a low-cost operation and is only used for one entity, the player. Therfore there's no need for paralleism which is one of the main advantages with jobs.
 
 For all the systems that're used with enteties that there're a lot of, in this case bullets and enemies, I'm using parallel jobs. Since there's a high likelyhood that these systems are gonna be handling a lot of data we want to be able to use as much compute power as possible from the CPU. 
 
-For the jobs I'm also using [BurstCompilie] to further enhance optimizing performance-heavy operations. Especially for parallel jobs since it combines multithreading with low-level code optimizations.
+With jobs I'm also using [BurstCompilie] to further enhance optimizing performance-heavy operations. Especially for parallel jobs since it combines multithreading with low-level code optimizations.
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## **Reflections:**
-One of the take aways from this assignment is that working with ECS/data oriented approach requires a very different mindset compared to working with the traditional object oriented way. ECS is feels like it requires more micro management since it seperates the data from the systems (behaviors), but once you get the hang of it, it's not that complicated. Escpecially once you understand the underlying advantages of ECS, such as how it's optimized for cache and you're able to take advantage of contiguous data in the memory, which is I assume, the main reason we'd like to aviod reference types when using DOTS. 
+One of the take aways from this assignment is that working with ECS/data oriented approach requires a very different mindset compared to working with traditional object oriented principles. ECS is feels like it requires more micro management since it seperates the data from the behavior, but once you get the hang of it, it's not that complicated. Escpecially once you understand the underlying advantages of ECS, such as how it's optimized for cache and you're able to take advantage of contiguous data in the memory, which is I assume, the main reason we'd like to aviod reference types when using DOTS. 
 
 Another things I'd like to point out is that I could've added a lot more features to the game. Such as collision, score, etc. However, I decided to focus more on the optimization and understand underlying structure and princples of ECS/DOTS instead, since that's not somthing I've been working with before. 
 
